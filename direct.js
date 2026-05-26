@@ -4,19 +4,18 @@ import { sleep, check } from "k6";
 const binFile = open("1mb.bin", "b");
 
 export const options = {
-  iterations: 10,
-};
-
-const headers = {
-  "Content-Type": "message/ohttp-chunked-req",
+  vus: 10,
+  iterations: 100,
 };
 
 export default function () {
   let res = http.post(
     "https://token-ohttp-dev.arcane.samsungspc.cloud/ogw",
     binFile,
-    { headers },
+    { headers: { "Content-Type": "message/ohttp-chunked-req" } },
   );
-  check(res, { "status is 200": (res) => res.status === 200 });
-  sleep(1);
+  check(res, {
+    "status is 200": (r) => r.status === 200,
+    "protocol is HTTP/2": (r) => r.proto === "HTTP/2.0",
+  });
 }

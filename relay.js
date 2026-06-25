@@ -5,8 +5,8 @@ import crypto from "k6/crypto";
 const binFile = open("1mb.bin", "b");
 
 export const options = {
-  vus: 1,
-  iterations: 1,
+  vus: 50,
+  duration: "5m",
 };
 
 export default function () {
@@ -14,7 +14,7 @@ export default function () {
 
   let res = http.post(
     "https://relay-dev.oblivious.network/dreamy-snowflake-12",
-    binFile,
+    "abcdef",
     {
       headers: {
         "Content-Type": "message/ohttp-chunked-req",

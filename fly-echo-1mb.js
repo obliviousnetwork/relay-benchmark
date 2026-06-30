@@ -1,15 +1,18 @@
 import http from "k6/http";
 import { check } from "k6";
 
+const binfile = open("1mb.bin", "b");
+
 export const options = {
-  vus: 16,
-  duration: "20s",
+  vus: 10,
+  duration: "60s",
 };
 
 export default function () {
-  let res = http.post("https://oblivious-relay-lax.fly.dev/echo", "hello", {
+  let res = http.post("https://oblivious-relay.fly.dev/echo", binfile, {
     headers: {
       "Content-Type": "message/ohttp-chunked-req",
+      Accept: "message/ohttp-chunked-res",
     },
   });
   check(res, {

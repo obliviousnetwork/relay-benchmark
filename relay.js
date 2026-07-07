@@ -4,9 +4,30 @@ import crypto from "k6/crypto";
 
 const binFile = open("1mb.bin", "b");
 
+// export const options = {
+//   discardResponseBodies: true,
+//   scenarios: {
+//     five_thousand: {
+//       executor: "ramping-arrival-rate",
+//       // Start iterations per `timeUnit`
+//       startRate: 300,
+//       // Start `startRate` iterations per minute
+//       timeUnit: "1s",
+//       // Pre-allocate VUs.
+//       preAllocatedVUs: 1000,
+//       stages: [
+//         { target: 1000, duration: "1m" },
+//         { target: 5000, duration: "2m" },
+//         { target: 5000, duration: "2m" },
+//         { target: 100, duration: "1m" },
+//       ],
+//     },
+//   },
+// };
+
 export const options = {
-  vus: 50,
-  duration: "5m",
+  vus: 1,
+  requests: 1,
 };
 
 export default function () {
